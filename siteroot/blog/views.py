@@ -60,11 +60,13 @@ class ProfileDetailView(DetailView):
         return None
 
 
-class ProfilePostsView(ListView): #ok
-    #queryset = Post.objects.filter(author = '3')
-    queryset = Post.objects.all()
+class ProfilePostsView(ListView):
     template_name = f'profile-posts.html'
+    model=Post
     context_object_name = 'posts'
+    def get_queryset(self):
+        return super().get_queryset().filter(author=self.request.user.id).order_by('created_date')
+
 
 class ProfileUpdateView(SuccessMessageMixin, UpdateView): #ok
 

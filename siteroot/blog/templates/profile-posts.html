@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Все посты{% endblock %}
+{% block title %}Посты юзера{% endblock %}
 
 {% block content %}
 
     <div class="container">
+        <h3> Мои посты:</h3>
            <table class="posts-table">
                {% for post in posts %}
                 <tr>
