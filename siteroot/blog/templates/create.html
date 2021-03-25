@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %} Создать аккаунт {% endblock %}
+
+{% block content %}
+  <section class="get-info">
+    <div class="container">
+      <div class="heading">
+        <h3>Создать аккаунт</h3>
+      </div>
+      <form class="get-info-form" action="{% url 'account-create' %}" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="get-info-form btn btn-blue" type="submit">
+          Создать аккаунт
+        </button>
+        <p class="get-info-instruction">
+          У вас уже есть аккаунт?
+          <a href="{% url 'account-login' %}"><strong>Войти</strong></a>
+        </p>
+      </form>
+    </div>
+  </section>
+{% endblock %}
+

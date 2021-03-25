@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Изменить профиль {% endblock %}
+
+{% block content %}
+  <section class="get-info">
+    <div class="container">
+      <div class="heading">
+        <h3>Изменить профиль</h3>
+      </div>
+      <form class="get-info-form" action="{{ user.profile.get_absolute_update_url }}"
+        method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+       <button type="submit" class="btn btn-blue">Сохранить</button>
+      </form>
+    </div>
+  </section>
+{% endblock %}

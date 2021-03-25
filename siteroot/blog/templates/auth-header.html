@@ -1,0 +1,36 @@
+{% load static %}
+
+<header class="second-head">
+  <div class="container">
+    <div class="head-img">
+      <img src="{% static 'img/logo-head2.png' %}" width="150" height="86">
+    </div>
+
+    <nav class="head-nav">
+      <ul class="head-ul">
+        <li>
+          <a href="{{ user.profile.get_absolute_url }}">Мой профиль</a>
+        </li>
+        <li>
+          <a href="{% url 'posts' %}">Все посты</a>
+        </li>
+        <li>
+          <a>Настройки</a>
+            <ul class='submenu'>
+              {% if request.user.is_superuser %}
+              <li>
+                <a href="/admin/">Администрация</a>
+              </li>
+              {% endif %}
+              <li>
+                <a href="">Удалить аккаунт</a>
+              </li>
+              <li>
+                <a href="{% url 'account-logout' %}">Выход</a>
+              </li>
+            </ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

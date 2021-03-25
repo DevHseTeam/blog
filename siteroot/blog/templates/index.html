@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Главная {% endblock %}
+
+{% block content %}
+
+  <header class="main-header">
+    <div class="container">
+        <div class="header-top"></div> <!--Don't remove -->
+        <div class="promo">
+          <div class="promo-title"></div>
+          {% if not user.is_authenticated %}
+          <p>Зарегистрируйся, чтобы написать свой первый пост!</p>
+            <a href="{% url 'account-create' %}" class='btn btn-blue'>
+              Создать аккаунт
+            </a>
+            <a href="{% url 'posts' %}" class='btn btn-blue'>
+              Все посты
+            </a>
+          {% endif %}
+        </div>
+    </div>
+  </header>
+
+    <section class="choice">
+    <div class="container">
+      <h3 class="about">О проекте:</h3>
+      <p>Веб-приложение Blog разработано в учебных целях.</p>
+      <p>После регистрации вы:</p>
+      <ul>
+        <li>получите персональный аккаунт</li>
+        <li>сможете просматривать посты других пользоваетелей и писать собственные</li>
+      </ul>
+    </div>
+  </section>
+
+{% endblock %}

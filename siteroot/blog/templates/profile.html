@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} {{ user.profile.get_full_name }} {% endblock %}
+
+
+{% block content %}
+ <div class="container">
+   <h3 id="greeting">Привет, {{ user.profile.first_name }}!<br>
+       Хочешь написать новый пост?
+   </h3>
+     <a class="btn btn-blue" href="{{ user.profile.get_absolute_update_url }}">
+              Редактировать профиль
+     </a>
+  </div>
+{% endblock %}
+
+

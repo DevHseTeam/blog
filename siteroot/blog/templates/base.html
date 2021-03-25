@@ -1,0 +1,26 @@
+{% load static %}
+
+<html lang="rus">
+
+   <head>
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="shortcut icon" href="{% static 'img/logo-icon.png' %}" type="image/x-icon">
+        {% block icon %}{% endblock %}
+    </head>
+
+  <body>
+
+     {% if user.is_authenticated %}
+        {% include 'auth-header.html' %}
+     {% else %}
+        {% include 'anon-header.html' %}
+     {% endif %}
+
+     {% block content %} {% endblock %}
+
+     {% include 'footer.html' %}
+
+  </body>
+
+</html>
