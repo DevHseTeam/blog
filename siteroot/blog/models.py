@@ -44,3 +44,6 @@ class Profile(models.Model):
 
     def get_full_name(self):
         return f'{self.first_name} {self.last_name}'
+
+    def get_all_profile_posts(self):
+        return reverse('profile-posts', args=[self.user.username])

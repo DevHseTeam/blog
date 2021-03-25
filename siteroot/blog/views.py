@@ -60,6 +60,12 @@ class ProfileDetailView(DetailView):
         return None
 
 
+class ProfilePostsView(ListView): #ok
+    #queryset = Post.objects.filter(author = '3')
+    queryset = Post.objects.all()
+    template_name = f'profile-posts.html'
+    context_object_name = 'posts'
+
 class ProfileUpdateView(SuccessMessageMixin, UpdateView): #ok
 
     model = Profile
