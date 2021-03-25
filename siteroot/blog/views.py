@@ -39,7 +39,6 @@ class AccountDeleteView(DeleteView): #ok
     model = get_user_model()
     template_name = f'account-confirm-delete.html'
     success_url = reverse_lazy(settings.INDEX_URL)
-    success_message = "Ваш аккаунт был успешно удалён."
 
     def get_object(self):
         return self.request.user
@@ -47,6 +46,18 @@ class AccountDeleteView(DeleteView): #ok
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)
         return super().delete(request, *args, **kwargs)
+
+
+class UsernameUpdateView(SuccessMessageMixin, UpdateView):
+
+    model = get_user_model()
+    fields = ['username']
+    template_name = f'account-username-update.html'
+    success_url = reverse_lazy(settings.LOGIN_REDIRECT_URL)
+    success_message = 'Имя пользователя было успешно изменено.'
+
+    def get_object(self):
+        return self.request.user
 
 
 class AccountLoginView(LoginView): #ok

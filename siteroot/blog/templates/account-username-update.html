@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Изменить имя пользователя {% endblock %}
+
+{% block content %}
+  <section class="get-info">
+    <div class="container">
+      <div class="heading">
+        <h3>Изменить имя пользователя</h3>
+      </div>
+      <form class="get-info-form" action="{% url 'account-username-update' %}" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="get-info-form btn btn-blue" type="submit">
+          Сохранить
+        </button>
+      </form>
+    </div>
+  </section>
+{% endblock %}
