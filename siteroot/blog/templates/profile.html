@@ -14,6 +14,27 @@
               Редактировать профиль
      </a>
   </div>
+<!-- вот тут в контексте posts должны быть посты именно этого юзера
+<h4>Мои посты:</h4>
+<div class="container">
+           <table class="posts-table">
+               {% for post in posts %}
+                <tr>
+                    <td class="border-bottom">
+                        <h3>{{ post.author }}</h3>
+                        <h5>{{ post.published_date }}</h5>
+                        <div class="post">
+                            <div class="post-body">
+                                <h3>{{ post.title }}</h3>
+                                <p>{{ post.text }}</p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+           </table>
+</div>
+-->
 {% endblock %}
 
 
