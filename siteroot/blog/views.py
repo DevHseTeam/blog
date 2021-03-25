@@ -11,7 +11,9 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.conf import settings
 from .decorators import anonymous_required
 from django.utils.decorators import method_decorator
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, DeleteView
+from django.contrib import messages
+from django.contrib.auth import get_user_model
 
 
 class IndexView(TemplateView): #ok
@@ -30,6 +32,21 @@ class AccountCreateView(SuccessMessageMixin, CreateView): #not works
     template_name = f'create.html'
     success_url = reverse_lazy(settings.LOGIN_URL)
     success_message = 'Пользователь был успешно создан.'
+
+
+class AccountDeleteView(DeleteView): #ok
+
+    model = get_user_model()
+    template_name = f'account-confirm-delete.html'
+    success_url = reverse_lazy(settings.INDEX_URL)
+    success_message = "Ваш аккаунт был успешно удалён."
+
+    def get_object(self):
+        return self.request.user
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super().delete(request, *args, **kwargs)
 
 
 class AccountLoginView(LoginView): #ok

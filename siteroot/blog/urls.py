@@ -6,9 +6,10 @@ urlpatterns = [
     path('posts', PostsView.as_view(), name='posts'),
     path('login', AccountLoginView.as_view(), name='account-login'),
     path('logout', AccountLogoutView.as_view(), name='account-logout'),
+    path('delete', AccountDeleteView.as_view(), name='account-delete'),
     path('redirect', ProfileRedirectView.as_view(), name='profile-redirect'),
     path('<slug:username>', ProfileDetailView.as_view(), name='profile-detail'),
     path('<slug:username>/update', ProfileUpdateView.as_view(), name='profile-update'),
     path('create', AccountCreateView.as_view(), name='account-create'),
-    path('<slug:username>/posts',ProfilePostsView.as_view(), name='profile-posts')
+    path('<slug:username>/posts',ProfilePostsView.as_view(), name='profile-posts'),
 ]
