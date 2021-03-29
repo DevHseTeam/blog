@@ -16,11 +16,12 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 
 
-class IndexView(TemplateView): #ok
+@method_decorator(anonymous_required, name='dispatch')
+class IndexView(TemplateView):
     template_name = f'index.html'
 
 
-class PostsView(ListView): #ok
+class PostsView(ListView):
     model = Post
     template_name = f'posts_list.html'
     context_object_name = 'posts'
@@ -35,7 +36,7 @@ class AccountCreateView(SuccessMessageMixin, CreateView):
     success_message = 'Пользователь был успешно создан.'
 
 
-class AccountDeleteView(DeleteView): #ok
+class AccountDeleteView(DeleteView):
 
     model = get_user_model()
     template_name = f'account-confirm-delete.html'
@@ -69,19 +70,18 @@ class PasswordChangeView(SuccessMessageMixin, PasswordChangeView):
     success_message = 'Пароль был успешно изменён.'
 
 
-class AccountLoginView(LoginView): #ok
+class AccountLoginView(LoginView):
     form_class = LoginForm
     template_name = f'login.html'
     redirect_authenticated_user = True
 
 
-class AccountLogoutView(LogoutView): #ok
-    pass  # Consistency :)
+class AccountLogoutView(LogoutView):
+    pass
 
 
-class ProfileRedirectView(RedirectView): #ok
+class ProfileRedirectView(RedirectView):
     ''' Redirect user to his profile. '''
-
     def get_redirect_url(self, *args, **kwargs):
         return reverse(
             'profile-detail', args=[self.request.user.username]
@@ -90,7 +90,6 @@ class ProfileRedirectView(RedirectView): #ok
 
 class ProfileDetailView(DetailView):
     ''' Display profile information. '''
-
     template_name = f'profile.html'
 
     def get_object(self):
