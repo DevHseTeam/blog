@@ -90,10 +90,11 @@ class ProfileRedirectView(RedirectView):
 
 class ProfileDetailView(DetailView):
     ''' Display profile information. '''
+    model=Profile
     template_name = f'profile.html'
 
     def get_object(self):
-        return None
+        return self.request.user.profile
 
 
 '''

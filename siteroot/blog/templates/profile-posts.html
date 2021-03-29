@@ -9,7 +9,7 @@
       <div class="heading">
         <h3>Новый пост:</h3>
       </div>
-      <form class="get-info-form" action="{{ user.get_all_profile_posts }}"
+      <form  action="{{ user.get_all_profile_posts }}"
         method="POST" >
         {% csrf_token %}
         {{ form.as_p }}
@@ -24,7 +24,7 @@
                 <tr>
                     <td class="border-bottom">
                         <h3>{{ post.author }}</h3>
-                        <h5>{{ post.published_date }}</h5>
+                        <h5>{{ post.created_date}}</h5>
                         <div class="post">
                             <div class="post-body">
                                 <h3>{{ post.title }}</h3>
