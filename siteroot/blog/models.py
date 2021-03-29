@@ -20,6 +20,10 @@ class Post(models.Model):
         return self.title
 
 
+    def get_absolute_url(self):
+        return reverse('profile-posts', args=[self.user.username])
+
+
 class Profile(models.Model):
 
     MALE, FEMALE = 'M', 'F'
@@ -35,6 +39,8 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
 
     def get_absolute_url(self):
         return reverse('profile-detail', args=[self.user.username])

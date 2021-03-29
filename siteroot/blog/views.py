@@ -5,7 +5,7 @@ from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.views.generic import RedirectView
 from django.views.generic.detail import DetailView
 from django.views.generic import ListView
-from .forms import LoginForm, AccountCreateForm, ProfileUpdateForm, AccountPasswordChangeForm
+from .forms import LoginForm, AccountCreateForm, ProfileUpdateForm, AccountPasswordChangeForm, PostCreateForm
 from django.views.generic.edit import CreateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.conf import settings
@@ -96,12 +96,31 @@ class ProfileDetailView(DetailView):
         return None
 
 
+'''
 class ProfilePostsView(ListView):
     template_name = f'profile-posts.html'
     model=Post
     context_object_name = 'posts'
     def get_queryset(self):
         return super().get_queryset().filter(author=self.request.user.id).order_by('created_date')
+
+
+'''
+class ProfilePostsView(SuccessMessageMixin, CreateView, ListView):
+    model = Post
+    template_name = f'profile-posts.html'
+    form_class=PostCreateForm
+    success_message = 'Добавлен новый пост'
+    #success_url = reverse_lazy(profile-posts'')
+    context_object_name = 'posts'
+    def get_queryset(self):
+        return super().get_queryset().filter(author=self.request.user.id).order_by('created_date')
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super(ProfilePostsView, self).form_valid(form)
+    def get_success_url(self):
+        return reverse_lazy('profile-posts', args=[self.request.user.username])
 
 
 class ProfileUpdateView(SuccessMessageMixin, UpdateView): #ok

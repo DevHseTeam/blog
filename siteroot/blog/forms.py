@@ -1,7 +1,7 @@
 from django.contrib import auth
 from django import forms
 from .models import Profile
-
+from .models import Post
 
 class LoginForm(auth.forms.AuthenticationForm): #ok
 
@@ -71,3 +71,9 @@ class ProfileUpdateForm(forms.ModelForm):
             'gender':     'Пол',
             'age':        'Возраст',
         }
+
+class PostCreateForm(forms.ModelForm):
+    class Meta:
+
+        model = Post
+        fields=('title', 'text',)

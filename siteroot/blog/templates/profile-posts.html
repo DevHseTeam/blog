@@ -6,7 +6,19 @@
 {% block content %}
 
     <div class="container">
-        <h3> Мои посты:</h3>
+      <div class="heading">
+        <h3>Новый пост:</h3>
+      </div>
+      <form class="get-info-form" action="{{ user.get_all_profile_posts }}"
+        method="POST" >
+        {% csrf_token %}
+        {{ form.as_p }}
+       <button type="submit" class="btn btn-blue">Сохранить</button>
+      </form>
+    </div>
+
+    <div class="container">
+        <h3>Мои посты:</h3>
            <table class="posts-table">
                {% for post in posts %}
                 <tr>
