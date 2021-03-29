@@ -17,3 +17,4 @@ def anonymous_required(function=None, redirect_url=None):
 
     return actual_decorator(function) if function else actual_decorator
 
+

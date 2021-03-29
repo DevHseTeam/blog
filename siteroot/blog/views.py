@@ -27,7 +27,8 @@ class PostsView(ListView): #ok
 
 
 @method_decorator(anonymous_required, name='dispatch')
-class AccountCreateView(SuccessMessageMixin, CreateView): #not works
+class AccountCreateView(SuccessMessageMixin, CreateView):
+
     form_class = AccountCreateForm
     template_name = f'create.html'
     success_url = reverse_lazy(settings.LOGIN_URL)

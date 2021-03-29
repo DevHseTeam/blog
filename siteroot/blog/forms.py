@@ -15,7 +15,7 @@ class LoginForm(auth.forms.AuthenticationForm): #ok
         self.fields['username'].widget.attrs.pop("autofocus", None)
 
 
-class AccountCreateForm(auth.forms.UserCreationForm): #ok
+class AccountCreateForm(auth.forms.UserCreationForm):
 
     first_name = forms.CharField(max_length=128, widget=forms.TextInput(
         attrs={'placeholder': 'Harry'},
@@ -48,6 +48,7 @@ class AccountCreateForm(auth.forms.UserCreationForm): #ok
         user.profile.save()
 
         return user
+
 
 
 class ProfileUpdateForm(forms.ModelForm):
