@@ -25,8 +25,7 @@
                     <td class="border-bottom">
                        <!-- <h3>{{ post.id}} </h3>-->
                         <h3>{{ post.author }} </h3>
-
-                        <h5><a href="{% url 'delete' post.id %}"> <img src="{% static 'img/del.png' %}" width="20" height="20" > </a>
+                        <h5><a href="#" onclick="confirm_delete('{% url 'delete' post.id %}');"> <img src="{% static 'img/del.png ' %}" width="20" height="20" > </a>
                         </h5>
                         <h5>{{ post.created_date}}</h5>
                         <div class="post">
@@ -40,4 +39,15 @@
                 {% endfor %}
            </table>
         </div>
+<script>
+function confirm_delete(url){
+
+    var r = confirm("Sure you want to delete?");
+    if (r == true) {
+        window.location.href=url;
+
+    }
+    }
+</script>
+
 {% endblock %}
