@@ -23,7 +23,11 @@
                {% for post in posts %}
                 <tr>
                     <td class="border-bottom">
-                        <h3>{{ post.author }}</h3>
+                       <!-- <h3>{{ post.id}} </h3>-->
+                        <h3>{{ post.author }} </h3>
+
+                        <h5><a href="{% url 'delete' post.id %}"> <img src="{% static 'img/del.png' %}" width="20" height="20" > </a>
+                        </h5>
                         <h5>{{ post.created_date}}</h5>
                         <div class="post">
                             <div class="post-body">

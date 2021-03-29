@@ -14,7 +14,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-
+from django.http import HttpResponseRedirect
 
 @method_decorator(anonymous_required, name='dispatch')
 class IndexView(TemplateView):
@@ -97,16 +97,7 @@ class ProfileDetailView(DetailView):
         return self.request.user.profile
 
 
-'''
-class ProfilePostsView(ListView):
-    template_name = f'profile-posts.html'
-    model=Post
-    context_object_name = 'posts'
-    def get_queryset(self):
-        return super().get_queryset().filter(author=self.request.user.id).order_by('created_date')
 
-
-'''
 class ProfilePostsView(SuccessMessageMixin, CreateView, ListView):
     model = Post
     template_name = f'profile-posts.html'
@@ -148,6 +139,12 @@ class EmailUpdateView(SuccessMessageMixin, UpdateView):
         return self.request.user
 
 
+def delete_post(request,post_id=None):
 
+    post_to_delete=Post.objects.get(id=post_id)
+
+    if post_to_delete.author==request.user:
+        post_to_delete.delete()
+    return HttpResponseRedirect(reverse('profile-posts', args=[request.user.username]))
 
 
