@@ -50,6 +50,14 @@ class AccountCreateForm(auth.forms.UserCreationForm):
         return user
 
 
+class AccountPasswordChangeForm(auth.forms.PasswordChangeForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.use_required_attribute = False
+
+
+
 
 class ProfileUpdateForm(forms.ModelForm):
 

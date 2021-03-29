@@ -1,11 +1,11 @@
 from django.views.generic.base import TemplateView
 from .models import Post, Profile
 from django.urls import reverse, reverse_lazy
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.views.generic import RedirectView
 from django.views.generic.detail import DetailView
 from django.views.generic import ListView
-from .forms import LoginForm, AccountCreateForm, ProfileUpdateForm
+from .forms import LoginForm, AccountCreateForm, ProfileUpdateForm, AccountPasswordChangeForm
 from django.views.generic.edit import CreateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.conf import settings
@@ -61,6 +61,14 @@ class UsernameUpdateView(SuccessMessageMixin, UpdateView):
         return self.request.user
 
 
+class PasswordChangeView(SuccessMessageMixin, PasswordChangeView):
+
+    form_class = AccountPasswordChangeForm
+    template_name = f'password-change.html'
+    success_url = reverse_lazy(settings.LOGIN_REDIRECT_URL)
+    success_message = 'Пароль был успешно изменён.'
+
+
 class AccountLoginView(LoginView): #ok
     form_class = LoginForm
     template_name = f'login.html'
@@ -107,6 +115,18 @@ class ProfileUpdateView(SuccessMessageMixin, UpdateView): #ok
 
     def get_object(self):
         return self.request.user.profile
+
+
+class EmailUpdateView(SuccessMessageMixin, UpdateView):
+
+    model = get_user_model()
+    fields = ['email']
+    template_name = f'email-update.html'
+    success_url = reverse_lazy(settings.LOGIN_REDIRECT_URL)
+    success_message = 'Адрес электронной почты был успешно изменён.'
+
+    def get_object(self):
+        return self.request.user
 
 
 
