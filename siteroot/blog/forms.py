@@ -3,7 +3,7 @@ from django import forms
 from .models import Profile
 from .models import Post
 
-class LoginForm(auth.forms.AuthenticationForm): #ok
+class LoginForm(auth.forms.AuthenticationForm):
 
     error_messages = {
         'invalid_login': 'Неверное имя пользователя или пароль.',
@@ -57,8 +57,6 @@ class AccountPasswordChangeForm(auth.forms.PasswordChangeForm):
         self.use_required_attribute = False
 
 
-
-
 class ProfileUpdateForm(forms.ModelForm):
 
     class Meta:
@@ -72,8 +70,9 @@ class ProfileUpdateForm(forms.ModelForm):
             'age':        'Возраст',
         }
 
-class PostCreateForm(forms.ModelForm):
-    class Meta:
 
+class PostCreateForm(forms.ModelForm):
+
+    class Meta:
         model = Post
-        fields=('title', 'text',)
+        fields = ('title', 'text',)

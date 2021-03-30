@@ -260,6 +260,16 @@ body {
   width: 450px;
 }
 
+.promo::after {
+  content: "";
+  position: absolute;
+  top: -70px;
+  left: 550px;
+  width: 452px;
+  height: 452px;
+  background-image: url("../img/bg-promo.png");
+  background-repeat: no-repeat;
+}
 
 .promo-title {
   margin-bottom: 25px;

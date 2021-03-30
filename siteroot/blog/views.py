@@ -18,10 +18,12 @@ from django.http import HttpResponseRedirect
 
 @method_decorator(anonymous_required, name='dispatch')
 class IndexView(TemplateView):
+    ''' Display index page '''
     template_name = f'index.html'
 
 
 class PostsView(ListView):
+    ''' Display all posts '''
     model = Post
     template_name = f'posts_list.html'
     context_object_name = 'posts'
@@ -29,15 +31,14 @@ class PostsView(ListView):
 
 @method_decorator(anonymous_required, name='dispatch')
 class AccountCreateView(SuccessMessageMixin, CreateView):
-
+    ''' Display the account creation form '''
     form_class = AccountCreateForm
     template_name = f'create.html'
     success_url = reverse_lazy(settings.LOGIN_URL)
-    success_message = 'Пользователь был успешно создан.'
 
 
 class AccountDeleteView(DeleteView):
-
+    ''' Display deletion confirmation page '''
     model = get_user_model()
     template_name = f'account-confirm-delete.html'
     success_url = reverse_lazy(settings.INDEX_URL)
@@ -51,37 +52,37 @@ class AccountDeleteView(DeleteView):
 
 
 class UsernameUpdateView(SuccessMessageMixin, UpdateView):
-
+    ''' Display the username change form '''
     model = get_user_model()
     fields = ['username']
     template_name = f'account-username-update.html'
     success_url = reverse_lazy(settings.LOGIN_REDIRECT_URL)
-    success_message = 'Имя пользователя было успешно изменено.'
 
     def get_object(self):
         return self.request.user
 
 
 class PasswordChangeView(SuccessMessageMixin, PasswordChangeView):
-
+    ''' Display the password change form '''
     form_class = AccountPasswordChangeForm
     template_name = f'password-change.html'
     success_url = reverse_lazy(settings.LOGIN_REDIRECT_URL)
-    success_message = 'Пароль был успешно изменён.'
 
 
 class AccountLoginView(LoginView):
+    ''' Display the login form '''
     form_class = LoginForm
     template_name = f'login.html'
     redirect_authenticated_user = True
 
 
 class AccountLogoutView(LogoutView):
+    ''' Logout '''
     pass
 
 
 class ProfileRedirectView(RedirectView):
-    ''' Redirect user to his profile. '''
+    ''' Redirect user to his profile '''
     def get_redirect_url(self, *args, **kwargs):
         return reverse(
             'profile-detail', args=[self.request.user.username]
@@ -89,7 +90,7 @@ class ProfileRedirectView(RedirectView):
 
 
 class ProfileDetailView(DetailView):
-    ''' Display profile information. '''
+    ''' Display profile information '''
     model=Profile
     template_name = f'profile.html'
 
@@ -99,51 +100,50 @@ class ProfileDetailView(DetailView):
 
 
 class ProfilePostsView(SuccessMessageMixin, CreateView, ListView):
+    ''' Display user posts '''
     model = Post
     template_name = f'profile-posts.html'
     form_class=PostCreateForm
-    success_message = 'Добавлен новый пост'
-    #success_url = reverse_lazy(profile-posts'')
     context_object_name = 'posts'
+
     def get_queryset(self):
         return super().get_queryset().filter(author=self.request.user.id).order_by('created_date')
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super(ProfilePostsView, self).form_valid(form)
+
     def get_success_url(self):
         return reverse_lazy('profile-posts', args=[self.request.user.username])
 
 
-class ProfileUpdateView(SuccessMessageMixin, UpdateView): #ok
-
+class ProfileUpdateView(SuccessMessageMixin, UpdateView):
+    ''' Display the profile update form '''
     model = Profile
     form_class = ProfileUpdateForm
     template_name = f'profile-update.html'
     success_url = reverse_lazy('profile-redirect')
-    success_message = 'Профиль был успешно обновлён.'
 
     def get_object(self):
         return self.request.user.profile
 
 
 class EmailUpdateView(SuccessMessageMixin, UpdateView):
-
+    ''' Display the email update form '''
     model = get_user_model()
     fields = ['email']
     template_name = f'email-update.html'
     success_url = reverse_lazy(settings.LOGIN_REDIRECT_URL)
-    success_message = 'Адрес электронной почты был успешно изменён.'
 
     def get_object(self):
         return self.request.user
 
 
-def delete_post(request,post_id=None):
+def delete_post(request, post_id=None):
+    ''' Post deletion function '''
+    post_to_delete = Post.objects.get(id=post_id)
 
-    post_to_delete=Post.objects.get(id=post_id)
-
-    if post_to_delete.author==request.user:
+    if post_to_delete.author == request.user:
         post_to_delete.delete()
     return HttpResponseRedirect(reverse('profile-posts', args=[request.user.username]))
 

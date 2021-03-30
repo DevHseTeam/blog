@@ -6,4 +6,3 @@ class BlogConfig(AppConfig):
 
     def ready(self):
         from . import signals
-
