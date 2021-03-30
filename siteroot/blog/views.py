@@ -37,7 +37,7 @@ class AccountCreateView(SuccessMessageMixin, CreateView):
     success_url = reverse_lazy(settings.LOGIN_URL)
 
 
-class AccountDeleteView(DeleteView):
+class AccountDeleteView(SuccessMessageMixin, DeleteView):
     ''' Display deletion confirmation page '''
     model = get_user_model()
     template_name = f'account-confirm-delete.html'
